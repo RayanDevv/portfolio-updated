@@ -6,37 +6,74 @@ import { useRouter } from 'next/navigation';
 export default function Home() {
   const router = useRouter();
   const [isAnimating, setIsAnimating] = useState(false);
-  const [gears, setGears] = useState<Array<{ left: string; delay: string; duration: string; size: string }>>([]);
+  
+  // --- STATES POUR LES ANIMATIONS ---
+  const [gears, setGears] = useState<Array<{ left: string; delay: string; duration: string; size: number }>>([]);
+  const [stars, setStars] = useState<Array<{ left: string; delay: string; duration: string; size: number }>>([]);
+  const [typedName, setTypedName] = useState("");
 
- // --- DONNÉES COMPÉTENCES CORRIGÉES (Liens Stables) ---
+  // --- DONNÉES COMPÉTENCES ---
   const skills = [
-    // DEVELOPPEMENT
-    { name: "Python", level: "Avancé", url: "https://www.svgrepo.com/show/452091/python.svg" },
-    { name: "Node.js", level: "Avancé", url: "https://www.svgrepo.com/show/452075/node-js.svg" },
-    { name: "CSS 3", level: "Avancé", url: "https://www.svgrepo.com/show/452185/css-3.svg" },
-    { name: "Git", level: "Avancé", url: "https://www.svgrepo.com/show/452210/git.svg" },
-    { name: "Langage C", level: "Débutant (Algo)", url: "https://www.svgrepo.com/show/353602/c-1.svg" },
+    // Web
+    { name: "Python", level: "Avancé", url: "https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" },
+    { name: "Node.js", level: "Avancé", url: "https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg" },
+    { name: "CSS 3", level: "Avancé", url: "https://upload.wikimedia.org/wikipedia/commons/6/62/CSS3_logo.svg" },
+    { name: "Git", level: "Avancé", url: "https://upload.wikimedia.org/wikipedia/commons/e/e0/Git-logo.svg" },
+    { name: "Langage C", level: "Débutant (Algo)", url: "https://upload.wikimedia.org/wikipedia/commons/1/18/C_Programming_Language.svg" },
+    { name: "SQL", level: "Intermédiaire", url: "https://upload.wikimedia.org/wikipedia/commons/8/87/Sql_data_base_with_logo.png" },
     
-    // DATA & BASES DE DONNÉES
-    { name: "SQL", level: "Intermédiaire", url: "https://www.svgrepo.com/show/331760/sql-database-generic.svg" },
-    { name: "Access", level: "Avancé", url: "https://www.svgrepo.com/show/373809/access-2013.svg" },
-    { name: "Excel", level: "Avancé", url: "https://www.svgrepo.com/show/452196/excel.svg" },
-    { name: "Power BI", level: "Intermédiaire", url: "https://www.svgrepo.com/show/354228/microsoft-power-bi.svg" },
-    
-    // ERP
-    { name: "Odoo", level: "Débutant", url: "https://www.svgrepo.com/show/330992/odoo.svg" },
-    { name: "Sage", level: "Débutant", url: "https://asset.brandfetch.io/idJ2H5Lp9b/id5g4jJd-X.svg" }, 
+    // Locaux
+    { name: "Access", level: "Avancé", url: "/logos/logo_access.png" },
+    { name: "Excel", level: "Avancé", url: "/logos/logo_excel.png" },
+    { name: "Power BI", level: "Intermédiaire", url: "https://upload.wikimedia.org/wikipedia/commons/c/cf/New_Power_BI_Logo.svg" },
+    { name: "Odoo", level: "Débutant", url: "/logos/logo_odoo.png" },
+    { name: "Sage", level: "Intermédiaire", url: "/logos/logo_sage.png" },
+    { name: "Docker", level: "Intermédiaire", url: "/logos/logo_docker.png" }, 
   ];
 
-  // Génération des engrenages pour l'animation
+  // --- 1. EFFET MACHINE À ÉCRIRE (NOM) ---
   useEffect(() => {
-    const newGears = Array.from({ length: 12 }).map(() => ({
-      left: `${Math.random() * 80 + 10}%`,
+    const targetText = "BOURAS";
+    let charIndex = 0;
+    let timeoutId: NodeJS.Timeout;
+
+    const typeWriter = () => {
+      if (charIndex <= targetText.length) {
+        setTypedName(targetText.slice(0, charIndex));
+        charIndex++;
+        timeoutId = setTimeout(typeWriter, 300); 
+      } else {
+        timeoutId = setTimeout(() => {
+          charIndex = 0;
+          setTypedName(""); 
+          typeWriter();
+        }, 2000); 
+      }
+    };
+    typeWriter();
+    return () => clearTimeout(timeoutId);
+  }, []);
+
+  // --- 2. GÉNÉRATION DES ENGRENAGES (Menu Projets) ---
+  useEffect(() => {
+    const newGears = Array.from({ length: 15 }).map(() => ({
+      left: `${Math.random() * 90 + 5}%`,
       delay: `${Math.random() * 2}s`,
-      duration: `${Math.random() * 1 + 1}s`,
-      size: `${Math.random() * 10 + 10}px`
+      duration: `${Math.random() * 1.5 + 1}s`,
+      size: Math.random() * 15 + 10 
     }));
     setGears(newGears);
+  }, []);
+
+  // --- 3. GÉNÉRATION DES ÉTOILES (Bouton CV) ---
+  useEffect(() => {
+    const newStars = Array.from({ length: 30 }).map(() => ({
+      left: `${Math.random() * 100}%`,
+      delay: `${Math.random() * 2}s`,
+      duration: `${Math.random() * 2 + 1}s`,
+      size: Math.random() * 6 + 3 
+    }));
+    setStars(newStars);
   }, []);
 
   const handleProjectClick = (e: React.MouseEvent) => {
@@ -46,6 +83,8 @@ export default function Home() {
       router.push('/projets');
     }, 800);
   };
+
+  const btnStyle = "px-5 py-2 border border-[#C0B283] rounded text-white font-bold text-xs uppercase tracking-widest transition-all duration-300 bg-black hover:bg-[#C0B283] hover:text-black hover:shadow-[0_0_30px_rgba(192,178,131,0.6)] hover:scale-105 flex items-center justify-center cursor-pointer";
 
   return (
     <div className="min-h-screen bg-black text-white font-serif selection:bg-[#c0b283] selection:text-black overflow-x-hidden relative">
@@ -58,7 +97,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-black/40"></div>
       </div>
 
-      {/* --- STYLES CSS --- */}
+      {/* --- STYLES CSS GLOBAUX --- */}
       <style jsx global>{`
         @keyframes fadeInUp {
           from { opacity: 0; transform: translateY(20px); }
@@ -73,14 +112,36 @@ export default function Home() {
         html { scroll-behavior: smooth; }
 
         @keyframes gear-fall {
-          0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+          0% { transform: translateY(-30px) rotate(0deg); opacity: 0; }
           10% { opacity: 1; }
-          100% { transform: translateY(60px) rotate(360deg); opacity: 0; }
+          90% { opacity: 1; }
+          100% { transform: translateY(80px) rotate(360deg); opacity: 0; }
         }
         .animate-gear-fall {
           animation-name: gear-fall;
           animation-timing-function: linear;
           animation-iteration-count: infinite;
+        }
+
+        /* Animation Étoiles - Chute douce */
+        @keyframes star-fall {
+          0% { transform: translateY(-10px) scale(0.5); opacity: 0; }
+          30% { opacity: 1; transform: scale(1); }
+          80% { opacity: 1; transform: scale(1); }
+          100% { transform: translateY(50px) scale(0.5); opacity: 0; }
+        }
+        .animate-star-fall {
+          animation-name: star-fall;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+        }
+
+        .cursor-blink {
+          animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
         }
       `}</style>
 
@@ -89,55 +150,50 @@ export default function Home() {
 
         {/* --- NAVIGATION --- */}
         <nav className="fixed top-0 w-full backdrop-blur-md bg-black/60 border-b border-stone-800 z-50 transition-all duration-300">
-          <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-            <span className="text-xl tracking-wider text-white font-light uppercase hover:text-[#c0b283] transition-colors cursor-pointer">
-              Rayane Bouras<span className="text-[#c0b283]">.</span>
-            </span>
+          <div className="max-w-7xl mx-auto px-4 h-24 flex items-center justify-between">
             
-            <div className="hidden md:flex gap-10 text-xs uppercase tracking-[0.2em] text-stone-400 items-center">
-              <a href="#histoire" className="hover:text-[#c0b283] transition-colors h-full flex items-center">Histoire</a>
-              <a href="#expertise" className="hover:text-[#c0b283] transition-colors h-full flex items-center">Parcours</a>
-              {/* LIEN VERS COMPÉTENCES AJOUTÉ */}
-              <a href="#competences" className="hover:text-[#c0b283] transition-colors h-full flex items-center">Compétences</a>
+            {/* LOGO + NOM ANIMÉ */}
+            <a href="#" className="group flex items-center gap-4 cursor-pointer shrink-0">
+              <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="transition-transform duration-700 ease-in-out group-hover:rotate-90">
+                <defs>
+                  <filter id="goldGlow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feDropShadow dx="0" dy="0" stdDeviation="2" floodColor="#C0B283" floodOpacity="0.5"/>
+                  </filter>
+                </defs>
+                <path d="M50 10V20 M50 80V90 M10 50H20 M80 50H90 M21.7 21.7L28.8 28.8 M71.2 71.2L78.3 78.3 M21.7 78.3L28.8 71.2 M71.2 28.8L78.3 21.7" stroke="#C0B283" strokeWidth="4" strokeLinecap="round" filter="url(#goldGlow)"/>
+                <circle cx="50" cy="50" r="30" stroke="#C0B283" strokeWidth="2" filter="url(#goldGlow)"/>
+                <circle cx="50" cy="50" r="18" stroke="#C0B283" strokeWidth="1" strokeDasharray="4 4" opacity="0.8"/>
+                <circle cx="50" cy="50" r="6" fill="#C0B283"/>
+              </svg>
+
+              <span className="text-xl tracking-wider text-white font-light uppercase group-hover:text-[#c0b283] transition-colors hidden xl:flex items-center gap-2">
+                RAYANE
+                <span className="text-[#C0B283] font-serif italic font-medium tracking-wide flex items-center" style={{ fontFamily: 'Georgia, serif' }}>
+                  {typedName}
+                  <span className="inline-block w-[2px] h-6 bg-[#C0B283] ml-1 cursor-blink"></span>
+                </span>
+              </span>
+            </a>
+            
+            <div className="hidden md:flex gap-4 items-center">
+              <a href="#histoire" className={btnStyle}>Histoire</a>
+              <a href="#expertise" className={btnStyle}>Parcours</a>
+              <a href="#competences" className={btnStyle}>Compétences</a>
               
-              {/* BOUTON PROJETS */}
+              {/* Menu Projets */}
               <div className="relative group">
-                {/* Engrenages */}
-                <div className="absolute top-full left-0 w-full h-20 overflow-visible pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="absolute top-full left-0 w-full h-32 overflow-visible pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0">
                   {gears.map((gear, i) => (
-                    <span
-                      key={i}
-                      className="absolute text-[#C0B283] animate-gear-fall"
-                      style={{
-                        left: gear.left,
-                        animationDelay: gear.delay,
-                        animationDuration: gear.duration,
-                        fontSize: gear.size,
-                        top: '-10px'
-                      }}
-                    >
-                      ⚙️
-                    </span>
+                    <svg key={i} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="absolute text-[#C0B283] animate-gear-fall opacity-80" style={{ left: gear.left, animationDelay: gear.delay, animationDuration: gear.duration, width: gear.size, height: gear.size, top: '-30px' }}>
+                      <path fillRule="evenodd" d="M11.078 2.25c-.917 0-1.699.63-1.872 1.531l-.277 1.452a7.56 7.56 0 00-1.198.498l-1.328-.664a1.906 1.906 0 00-2.253.53l-1.313 1.576a1.906 1.906 0 00.12 2.312l.99 1.189a7.484 7.484 0 000 1.652l-.99 1.189a1.906 1.906 0 00-.12 2.312l1.313 1.576a1.906 1.906 0 002.253.53l1.328-.664a7.56 7.56 0 001.198-.498l.277 1.452c.173.901.955 1.531 1.872 1.531h2.054c.917 0 1.699-.63 1.872-1.531l.277-1.452a7.56 7.56 0 001.198-.498l1.328.664a1.906 1.906 0 002.253-.53l1.313-1.576a1.906 1.906 0 00-.12-2.312l-.99-1.189a7.484 7.484 0 000-1.652l.99-1.189a1.906 1.906 0 00.12-2.312l-1.313-1.576a1.906 1.906 0 00-2.253-.53l-1.328.664a7.56 7.56 0 001.198-.498l-.277-1.452c-.173-.901-.955-1.531-1.872-1.531H11.078zm.18 9.75a2.25 2.25 0 104.5 0 2.25 2.25 0 00-4.5 0z" clipRule="evenodd" />
+                    </svg>
                   ))}
                 </div>
-                {/* Bouton */}
-                <a 
-                  href="/projets" 
-                  onClick={handleProjectClick}
-                  className={`
-                    relative z-20 block px-8 py-2 border border-[#C0B283] rounded 
-                    text-white font-bold transition-all duration-300 bg-black
-                    group-hover:bg-[#C0B283] group-hover:text-black 
-                    group-hover:shadow-[0_0_30px_rgba(192,178,131,0.6)] group-hover:scale-105
-                    ${isAnimating ? 'bg-[#C0B283] text-black scale-110' : ''}
-                  `}
-                >
-                  PROJETS
-                </a>
+                <a href="/projets" onClick={handleProjectClick} className={`${btnStyle} ${isAnimating ? 'bg-[#C0B283] text-black scale-110' : ''}`}>PROJETS</a>
               </div>
 
-              <a href="#formation" className="hover:text-[#c0b283] transition-colors h-full flex items-center">Formation</a>
-              <a href="#contact" className="hover:text-[#c0b283] transition-colors h-full flex items-center">Contact</a>
+              <a href="#formation" className={btnStyle}>Formation</a>
+              <a href="#contact" className={btnStyle}>Contact</a>
             </div>
           </div>
         </nav>
@@ -156,13 +212,103 @@ export default function Home() {
               Étudiant en <strong>Licence de Comptabilité</strong> le jour, Développeur Freelance la nuit.
               Je fusionne la rigueur des chiffres avec la puissance de l'IA.
             </p>
-            <div className="flex flex-col md:flex-row gap-6 justify-center pt-12 animate-fade-in delay-300">
-              <a href="#histoire" className="px-10 py-4 bg-[#c0b283] hover:bg-[#a89b70] hover:scale-105 text-black font-medium text-xs uppercase tracking-[0.2em] transition-all shadow-[0_0_15px_rgba(192,178,131,0.3)]">
+            
+            {/* BOUTONS D'ACTION */}
+            <div className="flex flex-col md:flex-row gap-6 justify-center pt-8 animate-fade-in delay-300 items-center">
+              
+              <a href="#histoire" className="w-full md:w-auto text-center px-8 py-4 bg-[#c0b283] hover:bg-[#a89b70] hover:scale-105 text-black font-medium text-xs uppercase tracking-[0.2em] transition-all shadow-[0_0_15px_rgba(192,178,131,0.3)]">
                 Lire mon histoire
               </a>
-              <a href="mailto:rayanebouras03@gmail.com" className="px-10 py-4 bg-transparent hover:bg-stone-900/80 text-white font-medium text-xs uppercase tracking-[0.2em] border border-stone-600 hover:border-[#c0b283] transition-all backdrop-blur-sm">
+
+              {/* BOUTON CV "LINGOT D'OR" AVEC ÉTOILES */}
+              {/* Le conteneur parent a le fond DORÉ (#C0B283) et coupe les étoiles qui dépassent */}
+              <div className="relative group overflow-hidden rounded w-full md:w-auto bg-[#C0B283] hover:bg-white transition-colors duration-300 shadow-[0_0_20px_rgba(192,178,131,0.4)] hover:scale-105">
+                
+                {/* ÉTOILES BLANCHES (Pour qu'elles se voient sur le doré) */}
+                <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
+                  {stars.map((star, i) => (
+                     <svg
+                      key={i}
+                      xmlns="http://www.w3.org/2000/svg" 
+                      viewBox="0 0 24 24" 
+                      fill="white"
+                      className="absolute animate-star-fall opacity-90"
+                      style={{
+                        left: star.left,
+                        top: '-10px',
+                        width: star.size,
+                        height: star.size,
+                        animationDelay: star.delay,
+                        animationDuration: star.duration
+                      }}
+                    >
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                  ))}
+                </div>
+
+                {/* LIEN (Transparent, texte NOIR, au-dessus des étoiles) */}
+                <a 
+                  href="/CV_Rayane_Bouras.pdf" 
+                  download="CV_Rayane_Bouras.pdf"
+                  className="relative z-10 w-full md:w-auto text-center px-8 py-4 bg-transparent text-black font-medium text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-3"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                  Télécharger CV
+                </a>
+              </div>
+
+              <a href="mailto:rayanebouras03@gmail.com" className="w-full md:w-auto text-center px-8 py-4 bg-transparent hover:bg-stone-900/80 text-white font-medium text-xs uppercase tracking-[0.2em] border border-stone-600 hover:border-[#c0b283] transition-all backdrop-blur-sm">
                 Me contacter
               </a>
+            </div>
+
+            {/* --- RÉSEAUX SOCIAUX --- */}
+            <div className="flex gap-6 justify-center mt-8 animate-fade-in delay-300">
+              <a href="https://github.com/RayanDevv" target="_blank" rel="noopener noreferrer" className="group p-4 border border-stone-800 rounded-full bg-black/50 hover:border-[#c0b283] hover:shadow-[0_0_20px_rgba(192,178,131,0.4)] transition-all duration-300 hover:-translate-y-2">
+                <svg className="w-6 h-6 fill-stone-400 group-hover:fill-[#c0b283] transition-colors" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.065 1.815 2.805 1.29 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405 1.02 0 2.04.135 3 .405 2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.285 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+              </a>
+              <a href="https://www.linkedin.com/in/" target="_blank" rel="noopener noreferrer" className="group p-4 border border-stone-800 rounded-full bg-black/50 hover:border-[#c0b283] hover:shadow-[0_0_20px_rgba(192,178,131,0.4)] transition-all duration-300 hover:-translate-y-2">
+                <svg className="w-6 h-6 fill-stone-400 group-hover:fill-[#c0b283] transition-colors" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* --- CITATION MACHIAVEL --- */}
+        <section className="py-24 bg-black border-t border-stone-900/50 relative overflow-hidden">
+          <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-5 gap-12 items-center relative z-10">
+            
+            {/* COLONNE IMAGE */}
+            <div className="md:col-span-2 relative h-[400px] animate-fade-in">
+              {/* IMAGE MACHIAVEL LOCAL */}
+              <img 
+                src="/machiavel.png" 
+                alt="Statue Machiavel" 
+                // Changement ici : 'object-center' au lieu de 'object-top' pour descendre le cadrage
+                className="w-full h-full object-cover object-center opacity-100 grayscale hover:grayscale-0 transition-all duration-1000 scale-105 hover:scale-110"
+                style={{ 
+                  filter: 'grayscale(100%) sepia(80%) hue-rotate(5deg) brightness(1.0) contrast(1.2)',
+                  maskImage: 'linear-gradient(to right, black 60%, transparent 100%)',
+                  WebkitMaskImage: 'linear-gradient(to right, black 60%, transparent 100%)'
+                 }}
+              />
+              <div className="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#C0B283] opacity-30 blur-[100px] -z-10 pointer-events-none"></div>
+            </div>
+            
+            {/* COLONNE CITATION */}
+            <div className="md:col-span-3 text-left space-y-8 group cursor-default animate-fade-in delay-200">
+              <div className="text-8xl text-[#C0B283] opacity-20 font-serif leading-none absolute -top-10 -left-10 select-none">❝</div>
+              <p className="text-2xl md:text-4xl text-stone-300 font-serif italic leading-snug relative z-10">
+                "Il n'est rien de plus difficile à prendre en main, ni de plus périlleux à conduire, que de prendre l'initiative d'introduire un <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C0B283] to-[#F3E5AB] font-semibold">nouvel ordre de choses</span>."
+              </p>
+              <div className="flex items-center gap-4 pt-4">
+                <span className="h-[2px] w-16 bg-[#C0B283]"></span>
+                <div>
+                   <p className="text-white text-sm tracking-[0.2em] uppercase font-bold">Nicolas Machiavel</p>
+                  <p className="text-[#C0B283] text-xs tracking-[0.1em] font-light italic">Le Prince, Chapitre VI</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -249,7 +395,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* --- NOUVELLE SECTION : COMPÉTENCES AVEC LOGOS --- */}
+        {/* SECTION COMPÉTENCES */}
         <section id="competences" className="py-24 px-6 relative z-10">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl font-thin text-white mb-16 text-center uppercase tracking-[0.2em]">Compétences</h2>
@@ -260,16 +406,13 @@ export default function Home() {
                   key={index} 
                   className="bg-stone-900/40 border border-stone-800 hover:border-[#c0b283] p-6 flex flex-col items-center justify-center gap-4 group transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm"
                 >
-                  {/* Container Logo (Fond blanc léger pour lisibilité si nécessaire) */}
                   <div className="w-16 h-16 flex items-center justify-center p-2 bg-white/5 rounded-xl group-hover:bg-white/10 transition-colors">
-                    {/* Utilisation de 'img' pour charger les SVG externes */}
                     <img 
                       src={skill.url} 
                       alt={skill.name} 
                       className="w-full h-full object-contain"
                     />
                   </div>
-                  
                   <div className="text-center">
                     <h3 className="text-white font-medium uppercase tracking-wide text-sm mb-1">{skill.name}</h3>
                     <p className="text-[#c0b283] text-xs font-serif italic">{skill.level}</p>
