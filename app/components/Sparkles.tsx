@@ -4,56 +4,95 @@ import React, { useEffect, useState } from 'react';
 
 export default function Sparkles() {
   const [particles, setParticles] = useState<Array<{ style: React.CSSProperties }>>([]);
+  const [shootingStars, setShootingStars] = useState<Array<{ id: number; style: React.CSSProperties }>>([]);
 
   useEffect(() => {
-    // On génère 120 particules pour une bonne densité
-    const newParticles = Array.from({ length: 120 }).map((_, i) => ({
+    // 1. Sparkles : Plus grands et plus lents
+    const newParticles = Array.from({ length: 150 }).map(() => ({
       style: {
         top: `${Math.random() * 100}%`,
         left: `${Math.random() * 100}%`,
-        // Durée variable pour un effet naturel
-        animationDuration: `${Math.random() * 10 + 10}s`, 
-        animationDelay: `-${Math.random() * 10}s`, // Le délai négatif fait démarrer l'anim "en cours de route" (pas de temps mort au chargement)
-        opacity: Math.random() * 0.6 + 0.4, // Opacité entre 0.4 et 1
-        width: `${Math.random() * 3 + 1}px`, 
-        height: `${Math.random() * 3 + 1}px`,
+        width: `${Math.random() * 3.5 + 2.5}px`, // 🚀 Encore plus grands (2.5px à 6px)
+        height: `${Math.random() * 3.5 + 2.5}px`,
+        opacity: Math.random() * 0.7 + 0.3,
+        // 🚀 DURÉE TRÈS LONGUE : 20s à 35s pour un mouvement presque imperceptible
+        animationDuration: `${Math.random() * 15 + 20}s`,
+        animationDelay: `-${Math.random() * 20}s`,
       },
     }));
     setParticles(newParticles);
+
+    // 2. Étoiles filantes (horizontales)
+    const interval = setInterval(() => {
+      const id = Date.now();
+      const newStar = {
+        id,
+        style: {
+          top: `${Math.random() * 50}%`,
+          left: `${Math.random() * 70 + 30}%`,
+          animationDuration: '2.8s',
+        },
+      };
+      setShootingStars((prev) => [...prev, newStar]);
+      setTimeout(() => {
+        setShootingStars((prev) => prev.filter((star) => star.id !== id));
+      }, 3000);
+    }, 4000);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
-    // ✅ CORRECTION MAJEURE : z-50 pour passer DEVANT tout le contenu
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-50 mix-blend-screen">
       <style jsx>{`
-        @keyframes float {
-          0% {
-            transform: translateY(0) translateX(0);
-            opacity: 0.2;
+        /* 🚀 ANIMATION SPARKLES : Mouvement lent et aléatoire (pas juste monter) */
+        @keyframes sparkleSlow {
+          0%, 100% { 
+            transform: translate(0, 0) scale(1); 
+            opacity: 0.2; 
           }
-          50% {
-            opacity: 1; /* Brille fort au milieu */
-            transform: translateY(-50px) translateX(20px);
+          33% { 
+            transform: translate(15px, -15px) scale(1.3); 
+            opacity: 0.8; 
           }
-          100% {
-            transform: translateY(-100px) translateX(-20px);
-            opacity: 0.2; /* Ne disparaît jamais complètement (0.2) */
+          66% { 
+            transform: translate(-15px, 10px) scale(0.8); 
+            opacity: 0.5; 
           }
         }
+
+        @keyframes shootingStarAnim {
+          0% { transform: rotate(-25deg) translateX(0) scaleX(0); opacity: 0; }
+          15% { opacity: 1; transform: rotate(-25deg) translateX(0) scaleX(1); }
+          100% { transform: rotate(-25deg) translateX(-700px) scaleX(1); opacity: 0; }
+        }
+
+        .sparkle-item {
+          position: absolute;
+          border-radius: 50%;
+          background-color: #C0B283;
+          box-shadow: 0 0 10px rgba(192, 178, 131, 0.6);
+          /* 🚀 Application de l'animation lente et multidirectionnelle */
+          animation: sparkleSlow infinite ease-in-out;
+        }
+
+        .shooting-star {
+          position: absolute;
+          width: 130px;
+          height: 2px;
+          background: linear-gradient(90deg, #C0B283, transparent);
+          transform-origin: right;
+          animation: shootingStarAnim 2.8s forwards linear;
+          filter: drop-shadow(0 0 6px #C0B283);
+        }
       `}</style>
-      
+
       {particles.map((particle, i) => (
-        <span
-          key={i}
-          className="absolute rounded-full bg-[#C0B283]"
-          style={{
-            ...particle.style,
-            animationName: 'float',
-            animationTimingFunction: 'ease-in-out', // Mouvement plus fluide
-            animationIterationCount: 'infinite',
-            boxShadow: '0 0 5px #C0B283' // Petit éclat lumineux
-          }}
-        />
+        <div key={`p-${i}`} className="sparkle-item" style={particle.style} />
+      ))}
+
+      {shootingStars.map((star) => (
+        <div key={star.id} className="shooting-star" style={star.style} />
       ))}
     </div>
   );

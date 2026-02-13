@@ -6,6 +6,8 @@ import "./globals.css";
 import Cursor from "./components/Cursor";
 import Sparkles from "./components/Sparkles";
 import ChatBot from "./components/ChatBot";
+// 👇 NOUVEL IMPORT
+import ScrollToTop from "./components/ScrollToTop";
 
 // Configuration des polices
 const geistSans = Geist({
@@ -40,15 +42,17 @@ export default function RootLayout({
         {/* --- B. EFFETS D'ARRIÈRE-PLAN --- */}
         {/* Les poussières d'or statiques */}
         <Sparkles />
-        
-      
 
         {/* --- C. LE CONTENU DU SITE --- */}
         <div className="relative z-0">
           {children}
         </div>
 
-        {/* --- D. ASSISTANT IA --- */}
+        {/* --- D. ELEMENTS FLOTTANTS --- */}
+        {/* Le bouton pour remonter (Apparaît au scroll) */}
+        <ScrollToTop />
+        
+        {/* L'assistant IA */}
         <ChatBot />
       </body>
     </html>
