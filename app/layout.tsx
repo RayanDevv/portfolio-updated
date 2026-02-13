@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-// ✅ 1. IMPORTS DE TOUS TES EFFETS
+// ✅ 1. IMPORTS CORRIGÉS ET COMPLETS
 import Cursor from "./components/Cursor";
 import Sparkles from "./components/Sparkles";
 import ChatBot from "./components/ChatBot";
-// 👇 NOUVEL IMPORT
 import ScrollToTop from "./components/ScrollToTop";
+import NavbarWrapper from "./components/ui/NavbarWrapper";
+import StockTicker from "./components/ui/StockTicker"; // 👈 Ajout du nouveau ticker
 
 // Configuration des polices
 const geistSans = Geist({
@@ -36,23 +37,28 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-white selection:bg-[#C0B283] selection:text-black cursor-none`}
       >
-        {/* --- A. INTERFACE UTILISATEUR (Curseur) --- */}
+        {/* --- 1. INTERFACE UTILISATEUR (Curseur) --- */}
         <Cursor />
 
-        {/* --- B. EFFETS D'ARRIÈRE-PLAN --- */}
-        {/* Les poussières d'or statiques */}
+        {/* --- 2. BARRE DE NAVIGATION (Permanente) --- */}
+        <NavbarWrapper />
+
+        {/* --- 3. EFFETS D'ARRIÈRE-PLAN --- */}
         <Sparkles />
 
-        {/* --- C. LE CONTENU DU SITE --- */}
+        {/* --- 4. LE CONTENU DE LA PAGE --- */}
         <div className="relative z-0">
           {children}
         </div>
 
-        {/* --- D. ELEMENTS FLOTTANTS --- */}
-        {/* Le bouton pour remonter (Apparaît au scroll) */}
+        {/* --- 5. BANDE DYNAMIQUE (Ticker) --- */}
+        {/* Placé juste au-dessus du footer pour un look financier pro */}
+        <div className="mt-20">
+          <StockTicker />
+        </div>
+
+        {/* --- 6. ELEMENTS FLOTTANTS --- */}
         <ScrollToTop />
-        
-        {/* L'assistant IA */}
         <ChatBot />
       </body>
     </html>

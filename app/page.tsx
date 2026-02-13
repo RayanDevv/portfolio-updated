@@ -2,31 +2,16 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { motion } from 'framer-motion';
-
-// ✅ IMPORT DU MENU TEXTUEL (Barre du haut)
-import { FloatingTextNavbar } from './components/ui/FloatingTextNavbar';
+import { motion, Variants } from "framer-motion";
+import ContactForm from './components/ui/ContactForm'; // ✅ Import du nouveau formulaire
 
 export default function Home() {
   const router = useRouter();
   
   const [isAnimating, setIsAnimating] = useState(false);
-  const [gears, setGears] = useState<Array<{ left: string; delay: string; duration: string; size: number }>>([]);
   const [stars, setStars] = useState<Array<{ left: string; delay: string; duration: string; size: number }>>([]);
-  const [typedName, setTypedName] = useState("");
   const [isMounted, setIsMounted] = useState(false);
 
-  // --- CONFIGURATION DU MENU DU HAUT ---
-  const navItems = [
-    { title: "HISTOIRE", href: "#histoire" },
-    { title: "PARCOURS", href: "#expertise" },
-    { title: "COMPÉTENCES", href: "#competences" },
-    { title: "PROJETS", href: "/projets" },
-    { title: "FORMATION", href: "#formation" },
-    { title: "CONTACT", href: "#contact" },
-  ];
-
-  // --- DONNÉES COMPÉTENCES ---
   const skills = [
     { name: "Python", level: "Avancé", url: "https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" },
     { name: "Node.js", level: "Avancé", url: "https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg" },
@@ -42,10 +27,16 @@ export default function Home() {
     { name: "Docker", level: "Intermédiaire", url: "/logos/logo_docker.png" }, 
   ];
 
-  // --- ANIMATIONS ---
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 60 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+  const fadeInUp: Variants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { 
+        duration: 0.8, 
+        ease: "easeOut"
+      } 
+    }
   };
 
   const staggerContainer = {
@@ -53,39 +44,8 @@ export default function Home() {
     visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
   };
 
-  const handleProjectClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setIsAnimating(true);
-    setTimeout(() => {
-      router.push('/projets');
-    }, 500);
-  };
-
-  useEffect(() => {
-    const targetText = "BOURAS";
-    let charIndex = 0;
-    let timeoutId: NodeJS.Timeout;
-    const typeWriter = () => {
-      if (charIndex <= targetText.length) {
-        setTypedName(targetText.slice(0, charIndex));
-        charIndex++;
-        timeoutId = setTimeout(typeWriter, 300); 
-      } else {
-        timeoutId = setTimeout(() => { charIndex = 0; setTypedName(""); typeWriter(); }, 2000); 
-      }
-    };
-    typeWriter();
-    return () => clearTimeout(timeoutId);
-  }, []);
-
   useEffect(() => {
     setIsMounted(true);
-    setGears(Array.from({ length: 15 }).map(() => ({
-      left: `${Math.random() * 90 + 5}%`,
-      delay: `${Math.random() * 2}s`,
-      duration: `${Math.random() * 1.5 + 1}s`,
-      size: Math.random() * 15 + 10 
-    })));
     setStars(Array.from({ length: 30 }).map(() => ({
       left: `${Math.random() * 100}%`,
       delay: `${Math.random() * 2}s`,
@@ -98,35 +58,14 @@ export default function Home() {
     <div className="min-h-screen bg-black text-white font-serif selection:bg-[#c0b283] selection:text-black overflow-x-hidden relative">
       
       <style jsx global>{`
-        @keyframes gear-fall { 0% { transform: translateY(-30px) rotate(0deg); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(80px) rotate(360deg); opacity: 0; } }
-        .animate-gear-fall { animation-name: gear-fall; animation-timing-function: linear; animation-iteration-count: infinite; }
         @keyframes star-fall { 0% { transform: translateY(-10px) scale(0.5); opacity: 0; } 30% { opacity: 1; transform: scale(1); } 80% { opacity: 1; transform: scale(1); } 100% { transform: translateY(50px) scale(0.5); opacity: 0; } }
         .animate-star-fall { animation-name: star-fall; animation-timing-function: linear; animation-iteration-count: infinite; }
         .cursor-blink { animation: blink 1s step-end infinite; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
       `}</style>
 
-      {/* --- HEADER (LOGO SEUL) --- */}
-      <div className="fixed top-8 left-8 z-50">
-        <div className="group flex items-center gap-4 cursor-default">
-           <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="transition-transform duration-700 ease-in-out group-hover:rotate-90">
-                <defs><filter id="goldGlow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="0" stdDeviation="2" floodColor="#C0B283" floodOpacity="0.5"/></filter></defs>
-                <path d="M50 10V20 M50 80V90 M10 50H20 M80 50H90 M21.7 21.7L28.8 28.8 M71.2 71.2L78.3 78.3 M21.7 78.3L28.8 71.2 M71.2 28.8L78.3 21.7" stroke="#C0B283" strokeWidth="4" strokeLinecap="round" filter="url(#goldGlow)"/>
-                <circle cx="50" cy="50" r="30" stroke="#C0B283" strokeWidth="2" filter="url(#goldGlow)"/>
-                <circle cx="50" cy="50" r="18" stroke="#C0B283" strokeWidth="1" strokeDasharray="4 4" opacity="0.8"/>
-                <circle cx="50" cy="50" r="6" fill="#C0B283"/>
-           </svg>
-           <span className="text-xl tracking-wider text-white font-light uppercase hidden md:block">
-              RAYANE <span className="text-[#C0B283] font-serif italic font-medium tracking-wide flex items-center inline-flex" style={{ fontFamily: 'Georgia, serif' }}>{typedName}<span className="inline-block w-[2px] h-6 bg-[#C0B283] ml-1 cursor-blink"></span></span>
-           </span>
-        </div>
-      </div>
-
-      {/* --- NAVIGATION (Barre du haut FIXE sans loupe) --- */}
-      <FloatingTextNavbar items={navItems} />
-
       <div className={`relative z-10 transition-all duration-500 ease-in-out ${isAnimating ? 'opacity-0 scale-105 blur-sm' : 'opacity-100 scale-100 blur-0'}`}>
-
+        
         {/* HERO SECTION */}
         <motion.section 
           initial="hidden"
@@ -135,7 +74,7 @@ export default function Home() {
           variants={fadeInUp}
           className="relative pt-40 pb-20 px-6 flex flex-col items-center justify-center min-h-[85vh] overflow-hidden"
         >
-          <div className="relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center">
+           <div className="relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center">
             
             <div className="inline-block px-4 py-2 border border-[#c0b283] text-xs font-medium text-[#c0b283] uppercase tracking-[0.2em] mb-8 bg-black/50 backdrop-blur-md">
               Licence Comptabilité & Développement Web
@@ -149,14 +88,13 @@ export default function Home() {
               Étudiant en <strong>Licence de Comptabilité</strong> le jour, Développeur Freelance la nuit. Je fusionne la rigueur des chiffres avec la puissance de l'IA.
             </p>
 
-            {/* Boutons d'action */}
             <div className="flex flex-col md:flex-row gap-6 justify-center pt-8 items-center w-full">
               <a href="#histoire" className="w-full md:w-auto text-center px-8 py-4 bg-[#c0b283] hover:bg-[#a89b70] hover:scale-105 text-black font-medium text-xs uppercase tracking-[0.2em] transition-all shadow-[0_0_15px_rgba(192,178,131,0.3)]">Lire mon histoire</a>
               
               <div className="relative group overflow-hidden rounded w-full md:w-auto bg-[#C0B283] hover:bg-white transition-colors duration-300 shadow-[0_0_20px_rgba(192,178,131,0.4)] hover:scale-105">
                 <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
                   {isMounted && stars.map((star, i) => (
-                     <svg key={i} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" className="absolute animate-star-fall opacity-90" style={{ left: star.left, top: '-10px', width: star.size, height: star.size, animationDelay: star.delay, animationDuration: star.duration }}>
+                    <svg key={i} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" className="absolute animate-star-fall opacity-90" style={{ left: star.left, top: '-10px', width: star.size, height: star.size, animationDelay: star.delay, animationDuration: star.duration }}>
                       <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                     </svg>
                   ))}
@@ -166,7 +104,7 @@ export default function Home() {
                 </a>
               </div>
               
-              <a href="mailto:rayanebouras03@gmail.com" className="w-full md:w-auto text-center px-8 py-4 bg-transparent hover:bg-stone-900/80 text-white font-medium text-xs uppercase tracking-[0.2em] border border-stone-600 hover:border-[#c0b283] transition-all backdrop-blur-sm">Me contacter</a>
+              <a href="mailto:rayanebouras42@gmail.com" className="w-full md:w-auto text-center px-8 py-4 bg-transparent hover:bg-stone-900/80 text-white font-medium text-xs uppercase tracking-[0.2em] border border-stone-600 hover:border-[#c0b283] transition-all backdrop-blur-sm">Me contacter</a>
             </div>
             
             <motion.div 
@@ -188,19 +126,43 @@ export default function Home() {
 
         {/* CITATION */}
         <motion.section 
-          initial="hidden" whileInView="visible" viewport={{ once: false, margin: "-100px" }} variants={fadeInUp}
-          className="py-24 bg-black border-t border-stone-900/50 relative overflow-hidden"
+          initial="hidden" 
+          whileInView="visible" 
+          viewport={{ once: false, margin: "-100px" }} 
+          variants={fadeInUp}
+          className="py-16 sm:py-20 md:py-24 bg-black border-t border-stone-900/50 relative overflow-hidden"
         >
-          <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-5 gap-12 items-center relative z-10">
-            <div className="md:col-span-2 relative h-[400px]">
-              <img src="/machiavel.png" alt="Statue Machiavel" className="w-full h-full object-cover object-center opacity-100 grayscale hover:grayscale-0 transition-all duration-1000 scale-105 hover:scale-110" style={{ filter: 'grayscale(100%) sepia(80%) hue-rotate(5deg) brightness(1.0) contrast(1.2)', maskImage: 'linear-gradient(to right, black 60%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to right, black 60%, transparent 100%)' }} />
-              <div className="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#C0B283] opacity-30 blur-[100px] -z-10 pointer-events-none"></div>
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 grid md:grid-cols-5 gap-8 md:gap-12 items-center relative z-10">
+            
+            <div className="md:col-span-2 relative h-[200px] sm:h-[300px] md:h-[400px] order-first md:order-none">
+              <img 
+                src="/machiavel.png" 
+                alt="Statue Machiavel" 
+                className="w-full h-full object-cover opacity-100 grayscale hover:grayscale-0 transition-all duration-1000 scale-105 hover:scale-110" 
+                style={{ 
+                  filter: 'grayscale(100%) sepia(80%) hue-rotate(5deg) brightness(1.0) contrast(1.2)', 
+                  maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
+                  WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
+                  objectPosition: 'center top'
+                }} 
+              />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 sm:w-48 sm:h-48 md:w-64 md:h-64 bg-[#C0B283] opacity-20 blur-[60px] md:blur-[100px] -z-10 pointer-events-none"></div>
             </div>
-            {/* ✅ CORRECTION ICI : Ajout de 'relative' pour caler le guillemet */}
-            <div className="md:col-span-3 text-left space-y-8 group cursor-default relative">
-              <div className="text-8xl text-[#C0B283] opacity-20 font-serif leading-none absolute -top-10 -left-10 select-none">❝</div>
-              <p className="text-2xl md:text-4xl text-stone-300 font-serif italic leading-snug relative z-10">"Il n'est rien de plus difficile à prendre en main, ni de plus périlleux à conduire, que de prendre l'initiative d'introduire un <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C0B283] to-[#F3E5AB] font-semibold">nouvel ordre de choses</span>."</p>
-              <div className="flex items-center gap-4 pt-4"><span className="h-[2px] w-16 bg-[#C0B283]"></span><div><p className="text-white text-sm tracking-[0.2em] uppercase font-bold">Nicolas Machiavel</p><p className="text-[#C0B283] text-xs tracking-[0.1em] font-light italic">Le Prince, Chapitre VI</p></div></div>
+            
+            <div className="md:col-span-3 text-left space-y-6 sm:space-y-8 group cursor-default relative px-2 sm:px-0">
+              <div className="text-6xl sm:text-7xl md:text-8xl text-[#C0B283] opacity-20 font-serif leading-none absolute -top-4 sm:-top-6 md:-top-8 -left-2 sm:-left-4 md:-left-8 select-none">❝</div>
+              
+              <p className="text-lg sm:text-xl md:text-2xl lg:text-4xl text-stone-300 font-serif italic leading-snug relative z-10">
+                "Il n'est rien de plus difficile à prendre en main, ni de plus périlleux à conduire, que de prendre l'initiative d'introduire un <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C0B283] to-[#F3E5AB] font-semibold">nouvel ordre de choses</span>."
+              </p>
+              
+              <div className="flex items-center gap-3 sm:gap-4 pt-2 sm:pt-4">
+                <span className="h-[2px] w-10 sm:w-12 md:w-16 bg-[#C0B283]"></span>
+                <div>
+                  <p className="text-white text-xs sm:text-sm tracking-[0.15em] sm:tracking-[0.2em] uppercase font-bold">Nicolas Machiavel</p>
+                  <p className="text-[#C0B283] text-[10px] sm:text-xs tracking-[0.08em] sm:tracking-[0.1em] font-light italic">Le Prince, Chapitre VI</p>
+                </div>
+              </div>
             </div>
           </div>
         </motion.section>
@@ -294,10 +256,29 @@ export default function Home() {
           </div>
         </section>
 
+        {/* SECTION CONTACT */}
+        <section id="contact" className="py-24 px-6 relative overflow-hidden">
+          <div className="max-w-4xl mx-auto text-center mb-16">
+            <h2 className="text-3xl font-thin text-[#C0B283] uppercase tracking-[0.3em] mb-4">Initialisons le Contact</h2>
+            <p className="text-stone-500 font-sans text-sm">Une question ? Un projet ? Je vous réponds sous 24h.</p>
+          </div>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <ContactForm />
+          </motion.div>
+
+          {/* Déco en arrière-plan */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#C0B283] opacity-[0.03] blur-[120px] pointer-events-none -z-10"></div>
+        </section>
+
         {/* FOOTER */}
-        <footer id="contact" className="py-16 bg-black/90 text-center text-stone-600 text-xs uppercase tracking-widest font-light border-t border-stone-900">
+        <footer className="py-16 bg-black/90 text-center text-stone-600 text-xs uppercase tracking-widest font-light border-t border-stone-900">
           <p className="text-white text-lg mb-6 tracking-[0.3em] hover:text-[#c0b283] transition-colors cursor-default">Rayane Bouras</p>
-          <a href="mailto:rayanebouras03@gmail.com" className="hover:text-[#c0b283] transition-colors border-b border-transparent hover:border-[#c0b283] pb-1">rayanebouras03@gmail.com</a>
+          <a href="mailto:rayanebouras42@gmail.com" className="hover:text-[#c0b283] transition-colors border-b border-transparent hover:border-[#c0b283] pb-1">rayanebouras42@gmail.com</a>
           <p className="mt-8">© 2026 - Code & Finance.</p>
         </footer>
 
