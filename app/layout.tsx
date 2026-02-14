@@ -8,7 +8,7 @@ import Sparkles from "./components/Sparkles";
 import ChatBot from "./components/ChatBot";
 import ScrollToTop from "./components/ScrollToTop";
 import NavbarWrapper from "./components/ui/NavbarWrapper";
-import StockTicker from "./components/ui/StockTicker"; // 👈 Ajout du nouveau ticker
+import StockTicker from "./components/ui/StockTicker"; 
 
 // Configuration des polices
 const geistSans = Geist({
@@ -25,6 +25,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Portfolio | Rayane Bouras",
   description: "L'Architecte Financier - Portfolio Développeur & Comptable",
+  // 👇 C'EST ICI QUE LA MAGIE OPÈRE : On force l'icône
+  icons: {
+    icon: "/icon.png", // Cherche l'image directement dans le dossier public
+  },
 };
 
 export default function RootLayout({
