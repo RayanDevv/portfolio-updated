@@ -191,7 +191,7 @@ export default function Home() {
   Mon premier client est un plombier de mon réseau qui a besoin d’un site vitrine en 2022. 
   Ensuite, le bouche-à-oreille fait le reste. J’apprends en situation réelle : comprendre le besoin, 
   livrer dans les délais, corriger, recommencer. C’est ma première expérience concrète 
-  d’indépendant, sans IA pour m'ass.
+  d’indépendant, sans IA pour m'assister.
 </p>
 
 <p>
