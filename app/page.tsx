@@ -77,15 +77,15 @@ export default function Home() {
            <div className="relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center">
             
             <div className="inline-block px-4 py-2 border border-[#c0b283] text-xs font-medium text-[#c0b283] uppercase tracking-[0.2em] mb-8 bg-black/50 backdrop-blur-md">
-              Licence Comptabilité & Développement Web
+              Comptabilité – Contrôle de gestion – Développement web
             </div>
 
             <h1 className="text-5xl md:text-8xl font-thin text-white tracking-wide leading-tight uppercase mb-8">
-              L'Architecte <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#c0b283] to-[#e6d5a8] font-normal">Financier.</span>
+              Comptabilité,<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#c0b283] to-[#e6d5a8] font-normal">Data et Systèmes d’information</span>
             </h1>
 
             <p className="text-lg md:text-xl text-stone-300 max-w-2xl mx-auto leading-relaxed font-light font-sans mt-4 bg-black/30 p-4 rounded-xl backdrop-blur-sm border border-white/5">
-              Étudiant en <strong>Licence de Comptabilité</strong> le jour, Développeur Freelance la nuit. Je fusionne la rigueur des chiffres avec la puissance de l'IA.
+              Étudiant en comptabilité le jour, développeur freelance le soir. Je m’intéresse à la manière dont les données financières, les systèmes d’information et l’IA peuvent aider à prendre de meilleures décisions. 
             </p>
 
             <div className="flex flex-col md:flex-row gap-6 justify-center pt-8 items-center w-full">
@@ -167,7 +167,7 @@ export default function Home() {
           </div>
         </motion.section>
 
-        {/* HISTOIRE */}
+        {}
         <motion.section 
           id="histoire"
           initial="hidden" whileInView="visible" viewport={{ once: false, margin: "-100px" }} variants={fadeInUp}
@@ -176,10 +176,35 @@ export default function Home() {
           <div className="max-w-4xl mx-auto px-6 relative z-10">
             <h2 className="text-3xl font-thin text-[#c0b283] mb-12 text-center uppercase tracking-[0.2em]">La Genèse</h2>
             <div className="text-stone-300 font-sans font-light text-lg leading-loose text-justify space-y-8 bg-black/50 p-8 rounded-lg border border-white/5">
-              <p><span className="text-4xl float-left mr-4 mt-[-10px] text-[#c0b283] font-serif">2</span>021. Après le bac, c'est le vide. Pas de formation, pas de travail, et une question obsédante : <em>"Qu'est-ce que je vais faire ?"</em>. Plutôt que d'attendre, je suis revenu à ma première passion. Dès l'âge de 15 ans, je bidouillais déjà des programmes de triche pour modifier mes jeux vidéo. J'ai décidé de transformer ce passe-temps en métier en me confrontant à la rigueur de la <strong>Piscine de l'école 42</strong>.</p>
-              <p>C'est le déclic. Je me lance en freelance. Mon premier client ? Un plombier de mon réseau qui avait besoin d'un site vitrine en 2022. De là, le bouche-à-oreille a tout fait. J'ai tout appris sur le terrain, "à la dure", à une époque où l'IA n'était pas encore là pour écrire le code à notre place. C'était l'école de la débrouillardise.</p>
-              <p>Mais la vie est faite de détours. J'ai eu l'opportunité de reprendre mes études et je suis "tombé" dans la comptabilité. Contre toute attente, j'y ai découvert un monde de logique fascinant, mais terriblement archaïque dans ses outils.</p>
-              <p className="border-l-2 border-[#c0b283] pl-6 italic text-white text-xl bg-black/40 p-4 rounded-r-lg">C'est là que ma vision est née : devenir le Contrôleur de Gestion 2.0. Celui qui ne se contente pas de constater les écarts, mais qui code les outils pour les prédire.</p>
+             <p>
+  <span className="text-4xl float-left mr-4 mt-[-10px] text-[#c0b283] font-serif">
+    2
+  </span>
+  Après le bac, j’ai pris une pause. Pas de fac tout de suite, pas de CDI non plus, 
+  juste une vraie question : <em>« Qu’est-ce que je veux construire ? »</em>. 
+  Plutôt que d’attendre, je suis revenu à ce que je faisais déjà plus jeune : 
+  passer des heures à comprendre comment fonctionnent les programmes et les sites.
+</p>
+
+<p>
+  Je me forme, je passe par la <strong>Piscine de l’école 42</strong>, et je me lance en freelance. 
+  Mon premier client est un plombier de mon réseau qui a besoin d’un site vitrine en 2022. 
+  Ensuite, le bouche-à-oreille fait le reste. J’apprends en situation réelle : comprendre le besoin, 
+  livrer dans les délais, corriger, recommencer. C’est ma première expérience concrète 
+  d’indépendant, sans IA pour m'ass.
+</p>
+
+<p>
+  Quelques années plus tard, une opportunité me permet de reprendre des études, 
+  cette fois en gestion et en comptabilité. Je découvre un univers très logique, 
+  qui me parle, mais avec des outils souvent rigides et en retard sur le numérique. 
+  C’est là que mon profil « chiffres + tech » commence vraiment à prendre sens.
+</p>
+
+<p className="border-l-2 border-[#c0b283] pl-6 italic text-white text-xl bg-black/40 p-4 rounded-r-lg">
+  Aujourd’hui, mon objectif est clair : devenir un contrôleur de gestion capable 
+  de comprendre les comptes, mais aussi de construire les outils qui les font parler.
+</p>
             </div>
           </div>
         </motion.section>
@@ -210,8 +235,8 @@ export default function Home() {
               whileInView="visible"
               viewport={{ once: false, margin: "-100px" }}
             >
-              <motion.div variants={fadeInUp} className="relative group"><span className="absolute -left-[53px] top-2 h-3 w-3 rounded-full bg-[#c0b283] ring-4 ring-black shadow-[0_0_10px_#c0b283]"></span><h3 className="text-xl text-white font-normal uppercase tracking-wide group-hover:text-[#c0b283] transition-colors">Comptable Fournisseurs <span className="text-[#c0b283] text-sm lowercase ml-2">/ Alternance</span></h3><p className="text-stone-500 text-xs uppercase tracking-widest mb-4">Actuel • Indigo</p><p className="text-stone-400 font-light leading-relaxed">Gestion des flux, calcul des provisions (FNP/CCA) et analyse des comptes tiers.</p></motion.div>
-              <motion.div variants={fadeInUp} className="relative group"><span className="absolute -left-[53px] top-2 h-3 w-3 rounded-full bg-stone-800 group-hover:bg-[#c0b283] transition-colors ring-4 ring-black"></span><h3 className="text-xl text-white font-normal uppercase tracking-wide group-hover:text-[#c0b283] transition-colors">Assistant Comptable & Data <span className="text-[#c0b283] text-sm lowercase ml-2">/ Alternance</span></h3><p className="text-stone-500 text-xs uppercase tracking-widest mb-4">2024 - 2025 • Oxiproteomics</p><p className="text-stone-400 font-light leading-relaxed">Développement d'une <strong className="text-white">Web App (SQL/Power BI)</strong> pour le suivi qualité et travaux de clôture.</p></motion.div>
+              <motion.div variants={fadeInUp} className="relative group"><span className="absolute -left-[53px] top-2 h-3 w-3 rounded-full bg-[#c0b283] ring-4 ring-black shadow-[0_0_10px_#c0b283]"></span><h3 className="text-xl text-white font-normal uppercase tracking-wide group-hover:text-[#c0b283] transition-colors">Comptable Fournisseurs <span className="text-[#c0b283] text-sm lowercase ml-2">/ Alternance</span></h3><p className="text-stone-500 text-xs uppercase tracking-widest mb-4">2025 - 2026 • Indigo</p><p className="text-stone-400 font-light leading-relaxed">Gestion des flux, calcul des provisions (FNP/CCA) et analyse des comptes tiers.</p></motion.div>
+              <motion.div variants={fadeInUp} className="relative group"><span className="absolute -left-[53px] top-2 h-3 w-3 rounded-full bg-stone-800 group-hover:bg-[#c0b283] transition-colors ring-4 ring-black"></span><h3 className="text-xl text-white font-normal uppercase tracking-wide group-hover:text-[#c0b283] transition-colors">Assistant Comptable <span className="text-[#c0b283] text-sm lowercase ml-2">/ Alternance</span></h3><p className="text-stone-500 text-xs uppercase tracking-widest mb-4">2024 - 2025 • Oxiproteomics</p><p className="text-stone-400 font-light leading-relaxed">Développement d'une <strong className="text-white">Web App (SQL/Power BI)</strong> pour le suivi qualité et travaux de clôture.</p></motion.div>
               <motion.div variants={fadeInUp} className="relative group"><span className="absolute -left-[53px] top-2 h-3 w-3 rounded-full bg-stone-800 group-hover:bg-[#c0b283] transition-colors ring-4 ring-black"></span><h3 className="text-xl text-white font-normal uppercase tracking-wide group-hover:text-[#c0b283] transition-colors">Développeur Freelance <span className="text-[#c0b283] text-sm lowercase ml-2">/ RYN</span></h3><p className="text-stone-500 text-xs uppercase tracking-widest mb-4">Depuis 2021 • RYN</p><p className="text-stone-400 font-light leading-relaxed">Création de sites sur-mesure (Premier client : Artisan Plombier) et optimisation SEO.</p></motion.div>
             </motion.div>
           </div>
@@ -249,9 +274,8 @@ export default function Home() {
               whileInView="visible"
               viewport={{ once: false, margin: "-100px" }}
             >
-              <motion.div variants={fadeInUp} className="p-8 border border-stone-800 bg-black/40 hover:border-[#c0b283] transition-all group hover:-translate-y-1 backdrop-blur-sm md:col-span-2"><div className="flex justify-between items-start mb-4"><h3 className="text-xl text-white font-normal uppercase tracking-wide group-hover:text-[#c0b283] transition-colors">Licence Pro Métiers de la Gestion <br/><span className="text-sm text-stone-500 normal-case">Université de Lorraine</span></h3><span className="text-[#c0b283] font-serif text-2xl italic">2025-2026</span></div><p className="text-stone-400 font-light text-sm leading-relaxed">Spécialisation : Révision comptable, contrôle de gestion, fiscalité approfondie et gestion prévisionnelle.</p></motion.div>
-              <motion.div variants={fadeInUp} className="p-8 border border-stone-800 bg-black/40 hover:border-[#c0b283] transition-all group hover:-translate-y-1 backdrop-blur-sm"><div className="flex justify-between items-start mb-4"><h3 className="text-xl text-white font-normal uppercase tracking-wide group-hover:text-[#c0b283] transition-colors">DUT GEA <br/><span className="text-sm text-stone-500 normal-case">UPEC</span></h3><span className="text-[#c0b283] font-serif text-2xl italic">2023-2025</span></div><p className="text-stone-400 font-light text-sm leading-relaxed">Parcours Gestion comptable, Fiscale et Financière. Fondamentaux de la comptabilité analytique et analyse financière.</p></motion.div>
-              <motion.div variants={fadeInUp} className="p-8 border border-stone-800 bg-black/40 hover:border-[#c0b283] transition-all group hover:-translate-y-1 backdrop-blur-sm"><div className="flex justify-between items-start mb-4"><h3 className="text-xl text-white font-normal uppercase tracking-wide group-hover:text-[#c0b283] transition-colors">Licence AES <br/><span className="text-sm text-stone-500 normal-case">Université Paris Nanterre</span></h3><span className="text-[#c0b283] font-serif text-2xl italic">2022-2023</span></div><p className="text-stone-400 font-light text-sm leading-relaxed">Administration Économique et Sociale. Analyse macro/micro-économique, introduction comptabilité et droit.</p></motion.div>
+              <motion.div variants={fadeInUp} className="p-8 border border-stone-800 bg-black/40 hover:border-[#c0b283] transition-all group hover:-translate-y-1 backdrop-blur-sm md:col-span-2"><div className="flex justify-between items-start mb-4"><h3 className="text-xl text-white font-normal uppercase tracking-wide group-hover:text-[#c0b283] transition-colors">Licence Pro Gestion et comptabilité<br/><span className="text-sm text-stone-500 normal-case">Université de Lorraine</span></h3><span className="text-[#c0b283] font-serif text-2xl italic">2025-2026</span></div><p className="text-stone-400 font-light text-sm leading-relaxed">Spécialisation : Révision comptable, contrôle de gestion, fiscalité approfondie et gestion prévisionnelle.</p></motion.div>
+              <motion.div variants={fadeInUp} className="p-8 border border-stone-800 bg-black/40 hover:border-[#c0b283] transition-all group hover:-translate-y-1 backdrop-blur-sm md:col-span-2"><div className="flex justify-between items-start mb-4"><h3 className="text-xl text-white font-normal uppercase tracking-wide group-hover:text-[#c0b283] transition-colors">DUT GEA <br/><span className="text-sm text-stone-500 normal-case">UPEC</span></h3><span className="text-[#c0b283] font-serif text-2xl italic">2023-2025</span></div><p className="text-stone-400 font-light text-sm leading-relaxed">Parcours Gestion comptable, Fiscale et Financière. Fondamentaux de la comptabilité analytique et analyse financière.</p></motion.div>
             </motion.div>
           </div>
         </section>
