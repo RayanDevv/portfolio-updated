@@ -243,7 +243,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* COMPÉTENCES */}
+        {}
         <section id="competences" className="py-24 px-6 relative z-10">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl font-thin text-white mb-16 text-center uppercase tracking-[0.2em]">Compétences</h2>
@@ -264,7 +264,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* FORMATION */}
+        
         <section id="formation" className="py-24 bg-black/50 border-t border-stone-900 px-6 backdrop-blur-md">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-thin text-white mb-16 text-center uppercase tracking-[0.2em]">Formation</h2>
@@ -281,7 +281,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* SECTION CONTACT */}
+        
         <section id="contact" className="py-24 px-6 relative overflow-hidden">
           <div className="max-w-4xl mx-auto text-center mb-16">
             <h2 className="text-3xl font-thin text-[#C0B283] uppercase tracking-[0.3em] mb-4">Initialisons le Contact</h2>
@@ -296,7 +296,7 @@ export default function Home() {
             <ContactForm />
           </motion.div>
 
-          {/* Déco en arrière-plan */}
+          
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#C0B283] opacity-[0.03] blur-[120px] pointer-events-none -z-10"></div>
         </section>
 

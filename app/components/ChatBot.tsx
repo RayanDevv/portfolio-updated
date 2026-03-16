@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
-// --- 1. LE ROBOT QUI FAIT COUCOU (Ton design validé) ---
+
 const DetailedBotIcon = () => (
   <svg width="100%" height="100%" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
@@ -34,14 +34,14 @@ const DetailedBotIcon = () => (
     `}</style>
 
     <g className="bot-body">
-      {/* Bras Coucou 👋 */}
+      {}
       <g className="bot-arm-wave">
         <path d="M25 65 Q 10 65 5 45" stroke="url(#goldGradient)" strokeWidth="3" fill="none" strokeLinecap="round" />
         <circle cx="5" cy="45" r="5" fill="#C0B283" stroke="#000" strokeWidth="1" filter="url(#glow)" />
         <path d="M2 42 L1 38 M5 40 L5 36 M8 42 L10 38" stroke="#C0B283" strokeWidth="1" />
       </g>
 
-      {/* Corps */}
+      {}
       <line x1="50" y1="15" x2="50" y2="5" stroke="url(#goldGradient)" strokeWidth="2" />
       <circle cx="50" cy="5" r="3" className="bot-light" filter="url(#glow)" />
       <rect x="75" y="40" width="10" height="20" rx="2" fill="#1c1917" stroke="url(#goldGradient)" strokeWidth="1" />
@@ -83,20 +83,20 @@ export default function ChatBot() {
     if (!isOpen) setShowBubble(false);
   };
 
-  // --- 2. LA LOGIQUE CÉRÉBRALE (Connexion API) ---
+  
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputValue.trim()) return;
     
     const userText = inputValue;
     
-    // Affiche le message de l'utilisateur tout de suite
+    
     setMessages(prev => [...prev, { text: userText, isUser: true }]);
     setInputValue("");
-    setIsTyping(true); // Active l'animation de chargement
+    setIsTyping(true); 
 
     try {
-      // Envoie le message au serveur (qui parle à Google Gemini)
+      
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -107,11 +107,11 @@ export default function ChatBot() {
 
       const data = await response.json();
       
-      // Affiche la réponse de l'IA
+      
       setMessages(prev => [...prev, { text: data.reply, isUser: false }]);
     } catch (error) {
       console.error(error);
-      // Fallback si l'IA plante (ex: pas de clé API)
+      
       setMessages(prev => [...prev, { text: "Désolé, mon cerveau IA ne répond pas (Vérifiez la clé API). Voici mon mail : rayanebouras03@gmail.com", isUser: false }]);
     } finally {
       setIsTyping(false);
@@ -121,7 +121,7 @@ export default function ChatBot() {
   return (
     <div className="fixed bottom-8 right-8 z-[9999] flex flex-col items-end gap-4 pointer-events-auto">
       
-      {/* BULLE */}
+      {}
       <AnimatePresence>
         {showBubble && !isOpen && (
           <motion.div
@@ -136,7 +136,7 @@ export default function ChatBot() {
         )}
       </AnimatePresence>
 
-      {/* FENÊTRE */}
+      {}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -146,7 +146,7 @@ export default function ChatBot() {
             transition={{ duration: 0.2 }}
             className="w-[90vw] md:w-80 h-[450px] bg-stone-950/95 backdrop-blur-xl border border-[#C0B283]/50 rounded-2xl shadow-[0_0_40px_rgba(0,0,0,0.6)] overflow-hidden flex flex-col"
           >
-            {/* Header */}
+            {}
             <div className="bg-[#C0B283] p-3 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center p-1 border border-black/20">
@@ -162,7 +162,7 @@ export default function ChatBot() {
               <button onClick={toggleChat} className="text-black hover:bg-black/10 rounded-full p-1 transition-colors">✕</button>
             </div>
 
-            {/* Messages */}
+            {}
             <div className="flex-1 p-4 overflow-y-auto space-y-4 scrollbar-thin scrollbar-thumb-[#C0B283]/50 scrollbar-track-transparent">
               {messages.map((msg, i) => (
                 <div key={i} className={`flex ${msg.isUser ? 'justify-end' : 'justify-start'}`}>
@@ -187,7 +187,7 @@ export default function ChatBot() {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Input */}
+            {}
             <form onSubmit={handleSendMessage} className="p-3 bg-black/40 border-t border-stone-800 flex gap-2">
               <input 
                 type="text" 
@@ -208,7 +208,7 @@ export default function ChatBot() {
         )}
       </AnimatePresence>
 
-      {/* BOUTON D'OUVERTURE */}
+      {}
       <button 
         onClick={toggleChat}
         className="group relative w-16 h-16 rounded-full bg-[#C0B283] shadow-[0_0_20px_rgba(192,178,131,0.4)] hover:shadow-[0_0_30px_rgba(192,178,131,0.6)] hover:scale-110 transition-all duration-300 flex items-center justify-center border-2 border-white/20"

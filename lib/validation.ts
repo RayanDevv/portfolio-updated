@@ -20,8 +20,6 @@ export const contactSchema = z.object({
     .max(1000, "Message limité à 1000 caractères")
     .trim(),
 
-  // CHAMP PIÈGE (Honeypot)
-  // Invisible pour l'humain, mais les bots vont essayer de le remplir.
   _honey: z.string().optional(),
 });
 

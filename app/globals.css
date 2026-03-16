@@ -2,19 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ✅ AJOUTE CECI POUR TUER LE FLASH BLANC */
+
 html, body {
-  background-color: #000000; /* Force le fond noir absolu */
+  background-color: #000000; 
   color: #ffffff;
-  overflow-x: hidden; /* Empêche le scroll horizontal accidentel */
+  overflow-x: hidden; 
 }
 
-/* Le reste de ton CSS... */
-/* --- ANIMATION DE TRANSITION DE PAGE --- */
+
 @keyframes pageEnter {
   0% {
     opacity: 0;
-    transform: translateY(20px); /* La page arrive d'un peu plus bas */
+    transform: translateY(20px);
   }
   100% {
     opacity: 1;

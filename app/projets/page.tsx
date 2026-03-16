@@ -3,10 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 
-// ❌ PLUS AUCUN IMPORT DE CHATBOT OU SPARKLES ICI
-// Ils sont gérés automatiquement par le layout.tsx
 
-// --- COMPOSANT SPOTLIGHT CARD (Gère l'effet de lumière sur les cartes) ---
 function SpotlightCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   const divRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -46,7 +43,7 @@ function SpotlightCard({ children, className = "" }: { children: React.ReactNode
   );
 }
 
-// --- PAGE PRINCIPALE ---
+
 export default function Projets() {
   const router = useRouter();
   const [isMounted, setIsMounted] = useState(false);
@@ -81,7 +78,7 @@ export default function Projets() {
   return (
     <div className="min-h-screen bg-transparent text-white font-serif p-8 md:p-24 relative overflow-hidden">
       
-      {/* BOUTON RETOUR */}
+      {}
       <button 
         onClick={() => router.push('/')}
         className="relative z-10 mb-12 flex items-center gap-2 text-[#C0B283] hover:text-white transition-colors uppercase tracking-widest text-sm group cursor-pointer"
@@ -89,12 +86,12 @@ export default function Projets() {
         <span className="group-hover:-translate-x-2 transition-transform">←</span> Retour au Portfolio
       </button>
 
-      {/* TITRE */}
+      {}
       <h1 className="relative z-10 text-5xl md:text-7xl font-thin mb-16 uppercase tracking-tighter animate-fade-in">
         Projets <span className="text-[#C0B283] italic">&</span> Réalisations
       </h1>
 
-      {/* GRILLE DES PROJETS AVEC SPOTLIGHT */}
+      {}
       <div className="relative z-10 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {projects.map((project, index) => (
           <SpotlightCard key={index} className="flex flex-col justify-between h-[350px] group transition-all duration-300 hover:border-[#C0B283]/50">
@@ -122,13 +119,6 @@ export default function Projets() {
           </SpotlightCard>
         ))}
       </div>
-
-      {/* PAS DE <ChatBot /> ICI 
-         PAS DE <Sparkles /> ICI
-         PAS DE RB EN FOND
-      */}
-
-      {/* Juste une petite déco lumineuse en bas pour l'ambiance */}
       <div className="fixed -bottom-24 -left-24 w-96 h-96 bg-[#C0B283] opacity-10 blur-[120px] pointer-events-none"></div>
     </div>
   );
